@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Util.Memoria;
 import Util.Processo;
+import Util.ProcessoN;
 import Util.Arquivo;
 
 public class AlgoritmosAlocMEMO {
@@ -11,126 +12,84 @@ public class AlgoritmosAlocMEMO {
 	private static final String txtMemoria = "entrada/entrada-memoria.txt";
 	private static final String txtProcessos = "entrada/entrada-processos.txt";
 	private static Arquivo a = new Arquivo();
+	private static ArrayList<Memoria> MemoriaLIDA = new ArrayList<Memoria>();
+	private static ArrayList<Processo> ProcessosLIDOS = new ArrayList<Processo>();
+	private static ArrayList<ProcessoN> ProcessosNALOCADOS = new ArrayList<ProcessoN>();
 
 	public static void main(String[] args) {
 
-		
-
-		ArrayList<Memoria> Memoria = (ArrayList<Memoria>) a.lerArquivo(txtMemoria);
-		ArrayList<Processo> Processos = (ArrayList<Processo>) a.lerArquivo(txtProcessos);
-
-		apresentacao(Memoria, Processos);
-		
-		// --- daqui pra frente eh so meter bala
-		firstFit(Memoria, Processos);
-		apresentacaoResultado("First Fit", Memoria, Processos);
-		limparSujeira(Memoria, Processos);
-		
-	}
-
-	public static void firstFit(ArrayList<Memoria> Memoria, ArrayList<Processo> Processos) {
-		Boolean tudoAlocado = true;
-
-		for (Processo processo : Processos) {
-
-			for (Memoria memoria : Memoria) {
-				int tamanho = memoria.getParticaoBase() - memoria.getParticaoFinal();
-				tamanho = (tamanho < 0 ? -tamanho : tamanho); // tamanho
-																// positivo
-				// System.out.println(tamanho);
-				if ((memoria.getEstado().equals("H")) && (processo.getComputacao() <= tamanho)
-						&& (processo.getVisitado() != 1)) {
-					memoria.setEstado("P");
-					memoria.setIdProcesso(processo.getId());
-					processo.setAlocado(1);
-					processo.setVisitado(1);
-				}
-			}
-		}
-		
-		a.arquivoSaida("Algoritmo FIRST-FIT","FIRST-FIT");
+		resetDATA();
+		FristFIT(MemoriaLIDA, ProcessosLIDOS);
+		resetDATA();
 
 	}
-	
-	
 
-	public static void apresentacaoResultado(String Algoritmo, ArrayList<Memoria> Memoria,
-			ArrayList<Processo> Processos) {
-		System.out.println("");
-		System.out.println("------ " + Algoritmo + "----------");
-		System.out.println("");
-		System.out.print("Estado | Particao base | particao final | IDProcesso");
-		System.out.print("      ");
-		System.out.print("ID Processo  |   Alocado | Tamanho");
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
-		Boolean acabouMemoria = false;
-		Boolean acabouProcesso = false;
-		for (int i = 0;; i++) {
-			if (i < Memoria.size()) {
-				System.out.print(Memoria.get(i).getEstado() + "      |        " + Memoria.get(i).getParticaoBase()
-						+ "        | " + Memoria.get(i).getParticaoFinal() + "            |      "
-						+ Memoria.get(i).getIdProcesso() + "                  ");
+	public static void FristFIT(ArrayList<Memoria> Memoria, ArrayList<Processo> Processos) {
 
-			} else {
-				acabouMemoria = true;
-			}
+		boolean stop = false;
+		int tamanhoM = -1;
+		ProcessoN auxN = new ProcessoN();
 
-			if (i < Processos.size()) {
-				if (Processos.get(i).getAlocado() == 0) {
-					System.out.print("  " + Processos.get(i).getId() + "  |  " + "Não" + " | "
-							+ Processos.get(i).getComputacao());
-				} else {
-					System.out.print("  " + Processos.get(i).getId() + " |  " + "Sim" + " | "
-							+ Processos.get(i).getComputacao());
+		while (!stop) {
+
+			for (Processo processo : Processos) {
+
+				for (Memoria memoriaI : Memoria) {
+
+					tamanhoM = memoriaI.getTamanho();
+					tamanhoM = (tamanhoM < 0 ? -tamanhoM : tamanhoM);
+
+					if ((memoriaI.getEstado().equals("H")) && (processo.getComputacao() <= tamanhoM)
+							&& (processo.getVisitado() == 0)) {
+
+						memoriaI.setEstado("P");
+						memoriaI.setIdProcesso(processo.getId());
+						processo.setAlocado(1);
+						processo.setVisitado(1);
+
+					}
+
 				}
 
-			} else {
-				acabouProcesso = true;
 			}
-			if (acabouMemoria && acabouProcesso) {
 
-				break;
+			stop = true;
+
+		}
+
+		for (Processo p : Processos) {
+			if (p.getAlocado() == 0) {
+				auxN.setId(p.getId());
+				auxN.setTamanho(p.getComputacao());
+				ProcessosNALOCADOS.add(auxN);
 			}
-			System.out.println("");
-			System.out.print("----------------------------------------------------");
-			System.out.print("");
-			System.out.print("          ----------------------------");
-			System.out.println("");
+			auxN = new ProcessoN();
+		}
+
+		escreverArquivo("FRIST-FIT");
+
+	}
+
+	public static void escreverArquivo(String algoritmo) {
+
+		a.arquivoSaida("Algoritmo " + algoritmo + "\r\n", algoritmo);
+		for (Memoria m : MemoriaLIDA) {
+			a.arquivoSaida(m.toString(), algoritmo);
+		}
+
+		a.arquivoSaida("\r\nPROCESSOS NÃO ALOCADOS / TAMANHO", algoritmo);
+
+		for (ProcessoN pnl : ProcessosNALOCADOS) {
+			a.arquivoSaida(pnl.toString(), algoritmo);
 		}
 
 	}
 
-	public static void limparSujeira(ArrayList<Memoria> Memoria, ArrayList<Processo> Processos) {
+	public static void resetDATA() {
 
-		for (Memoria m : Memoria) {
-			m.setEstado("H");
-			m.setIdProcesso(0);
-		}
-		for (Processo p : Processos) {
-			p.setAlocado(0);
-
-		}
-
-	}
-
-	public static void apresentacao(ArrayList<Memoria> Memoria, ArrayList<Processo> Processos) {
-
-		System.out.println("Estado |   Particao base | particao final");
-		System.out.println("--------------------------------------");
-		for (Memoria m : Memoria) {
-			System.out.println(
-					m.getEstado() + "      |        " + m.getParticaoBase() + "        | " + m.getParticaoFinal());
-			System.out.println("--------------------------------------");
-		}
-
-		System.out.println("Computacao |   Alocado | Visitado");
-		System.out.println("--------------------------------------");
-		for (Processo p : Processos) {
-			System.out.println(p.getComputacao() + "      |        " + p.getAlocado() + "        | " + p.getVisitado());
-			System.out.println("--------------------------------------");
-		}
+		MemoriaLIDA = (ArrayList<Memoria>) a.lerArquivo(txtMemoria);
+		ProcessosLIDOS = (ArrayList<Processo>) a.lerArquivo(txtProcessos);
+		ProcessosNALOCADOS = new ArrayList<ProcessoN>();
 
 	}
 

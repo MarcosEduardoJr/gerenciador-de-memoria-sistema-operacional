@@ -4,14 +4,14 @@ public class Memoria {
 	private Integer idProcesso;
 
 	private String estado;
-	private Integer particaoBase;
-	private Integer particaoFinal;
+	private Integer inicio;
+	private Integer tamanho;
 
-	Memoria(String estado, Integer particaoBase, Integer particaoFinal, Integer id) {
+	Memoria(String estado, Integer inicio, Integer tamanho, Integer id) {
 		this.idProcesso = id;
 		this.estado = estado;
-		this.particaoBase = particaoBase;
-		this.particaoFinal = particaoFinal;
+		this.inicio = inicio;
+		this.tamanho = tamanho;
 
 	}
 
@@ -31,20 +31,25 @@ public class Memoria {
 		this.estado = estado;
 	}
 
-	public Integer getParticaoBase() {
-		return particaoBase;
+	public Integer getInicio() {
+		return inicio;
 	}
 
-	public void setParticaoBase(Integer particaoBase) {
-		this.particaoBase = particaoBase;
+	public void setInicio(Integer inicio) {
+		this.inicio = inicio;
 	}
 
-	public Integer getParticaoFinal() {
-		return particaoFinal;
+	public Integer getTamanho() {
+		return tamanho;
 	}
 
-	public void setParticaoFinal(Integer particaoFinal) {
-		this.particaoFinal = particaoFinal;
+	public void setTamanho(Integer tamanho) {
+		this.tamanho = tamanho;
+	}
+
+	@Override
+	public String toString() {
+		return "(id processo:"+idProcesso+"),"+ estado + "," + inicio + "," + tamanho;
 	}
 
 }

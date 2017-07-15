@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Arquivo {
 
 	private BufferedWriter escritor = null;
+	private ArrayList<String> algoritmos = new ArrayList<>();
 
 	public ArrayList<?> lerArquivo(String FILENAME) {
 
@@ -68,19 +69,17 @@ public class Arquivo {
 		/**
 		 * Método responsável por escrever os dados no arquivo de saída
 		 */
-		boolean key = false;
+		
 
 		try {
-			if (new File("saida/" + algoritmo + ".txt").exists() == false) {
+			if ((new File("saida/" + algoritmo + ".txt").exists() == false) && !(algoritmos.contains(algoritmo))) {
 
 				new File("saida/" + algoritmo + ".txt").createNewFile();
-
-			}
-			if (!key) {
 				escritor = new BufferedWriter(new FileWriter("saida/" + algoritmo + ".txt"));
-				key = true;
+				algoritmos.add(algoritmo);
+				
 			}
-
+			
 			escritor.append(texto + "\r\n");
 			escritor.flush();
 
