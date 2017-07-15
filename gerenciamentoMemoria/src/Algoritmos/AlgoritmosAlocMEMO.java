@@ -1,21 +1,25 @@
-package gerenciamentoMemoria;
+package Algoritmos;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class gerenciamentoMemoriaMain {
+import Util.Memoria;
+import Util.Processo;
+import Util.Arquivo;
+
+public class AlgoritmosAlocMEMO {
 
 	private static final String txtMemoria = "entrada/entrada-memoria.txt";
 	private static final String txtProcessos = "entrada/entrada-processos.txt";
 
 	public static void main(String[] args) {
 
-		ArrayList<Memoria> Memoria = (ArrayList<Memoria>) lerArquivo(txtMemoria);
-		ArrayList<Processo> Processos = (ArrayList<Processo>) lerArquivo(txtProcessos);
+		Arquivo a = new Arquivo();
+
+		ArrayList<Memoria> Memoria = (ArrayList<Memoria>) a.lerArquivo(txtMemoria);
+		ArrayList<Processo> Processos = (ArrayList<Processo>) a.lerArquivo(txtProcessos);
 
 		apresentacao(Memoria, Processos);
+		
 		// --- daqui pra frente eh so meter bala
 		firstFit(Memoria, Processos);
 		apresentacaoResultado("First Fit", Memoria, Processos);
@@ -100,57 +104,6 @@ public class gerenciamentoMemoriaMain {
 		}
 		for (Processo p : Processos) {
 			p.setAlocado(0);
-
-		}
-
-	}
-
-	public static ArrayList<?> lerArquivo(String FILENAME) {
-
-		BufferedReader br = null;
-		FileReader fr = null;
-		ArrayList<Memoria> mList = new ArrayList<Memoria>();
-		ArrayList<Processo> ptList = new ArrayList<Processo>();
-		try {
-
-			fr = new FileReader(FILENAME);
-			br = new BufferedReader(fr);
-
-			String sCurrentLine;
-
-			br = new BufferedReader(new FileReader(FILENAME));
-			int idProceso = 1;
-			while ((sCurrentLine = br.readLine()) != null) {
-				if (!sCurrentLine.equals("\n") && !sCurrentLine.equals("") && !sCurrentLine.equals(" ")) {
-					if (sCurrentLine.contains(" ")) {
-						String[] parts = sCurrentLine.split(" ");
-						Memoria m = new Memoria(parts[0], new Integer(parts[1]), new Integer(parts[2]), 0);
-						mList.add(m);
-					} else {
-						Processo p = new Processo(new Integer(sCurrentLine), 0, 0, idProceso);
-						ptList.add(p);
-						idProceso++;
-					}
-
-				}
-			}
-
-			if (br != null)
-				br.close();
-
-			if (fr != null)
-				fr.close();
-
-			if (!mList.isEmpty()) {
-				return mList;
-			} else {
-				return ptList;
-			}
-
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-
-			return null;
 
 		}
 

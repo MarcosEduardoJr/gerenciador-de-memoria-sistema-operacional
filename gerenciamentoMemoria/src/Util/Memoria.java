@@ -1,4 +1,4 @@
-package gerenciamentoMemoria;
+package Util;
 
 public class Memoria {
 	private Integer idProcesso;
