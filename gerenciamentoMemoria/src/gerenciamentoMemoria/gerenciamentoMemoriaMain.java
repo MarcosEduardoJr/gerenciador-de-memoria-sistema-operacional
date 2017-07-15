@@ -29,7 +29,7 @@ public class gerenciamentoMemoriaMain {
 			for (Memoria memoria : Memoria) {
 				int tamanho = memoria.getParticaoBase() - memoria.getParticaoFinal();
 				tamanho = (tamanho < 0 ? -tamanho : tamanho);
-				System.out.println(tamanho);
+				//System.out.println(tamanho);
 				if ((memoria.getEstado().equals("H")) && (processo.getComputacao() <= tamanho)
 						&& (processo.getVisitado() != 1)) {
 					memoria.setEstado("P");
@@ -40,15 +40,17 @@ public class gerenciamentoMemoriaMain {
 			}
 		}
 
-		apresentacaoResultado(Memoria, Processos);
+		apresentacaoResultado("First Fit", Memoria, Processos);
 
 	}
 
-	public static void apresentacaoResultado(ArrayList<Memoria> Memoria, ArrayList<Processo> Processos) {
+	public static void apresentacaoResultado(String Algoritmo, ArrayList<Memoria> Memoria,
+			ArrayList<Processo> Processos) {
 		System.out.println("");
+		System.out.println("------ " + Algoritmo + "----------");
 		System.out.println("");
 		System.out.print("Estado | Particao base | particao final | IDProcesso");
-		System.out.print(" -||- ");
+		System.out.print("      ");
 		System.out.print("ID Processo  |   Alocado | Tamanho");
 		System.out.println("");
 		System.out.println("");
