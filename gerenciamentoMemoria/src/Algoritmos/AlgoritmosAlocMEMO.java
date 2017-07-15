@@ -19,7 +19,13 @@ public class AlgoritmosAlocMEMO {
 	public static void main(String[] args) {
 
 		resetDATA();
+		System.out.println("Rodando Frist Fit...");
 		FristFIT(MemoriaLIDA, ProcessosLIDOS);
+		System.out.println("Terminado");
+		resetDATA();
+		System.out.println("Rodando Next Fit...");
+		NextFIT(MemoriaLIDA, ProcessosLIDOS);
+		System.out.println("Terminado");
 		resetDATA();
 
 	}
@@ -67,6 +73,58 @@ public class AlgoritmosAlocMEMO {
 		}
 
 		escreverArquivo("FRIST-FIT");
+
+	}
+
+	public static void NextFIT(ArrayList<Memoria> Memoria, ArrayList<Processo> Processos) {
+
+		boolean stop = false;
+		int tamanhoM = -1;
+		ProcessoN auxN = new ProcessoN();
+		int num = 0;
+
+		while (!stop) {
+
+			for (Processo processo : Processos) {
+
+				if (num == Memoria.size()) {
+					num = 0;
+				} else {
+					
+					for (int i = num; i < Memoria.size(); i++) {
+
+						tamanhoM = Memoria.get(i).getTamanho();
+						tamanhoM = (tamanhoM < 0 ? -tamanhoM : tamanhoM);
+
+						if ((Memoria.get(i).getEstado().equals("H")) && (processo.getComputacao() <= tamanhoM)
+								&& (processo.getVisitado() == 0)) {
+
+							Memoria.get(i).setEstado("P");
+							Memoria.get(i).setIdProcesso(processo.getId());
+							processo.setAlocado(1);
+							processo.setVisitado(1);
+							num = i;
+
+						}
+
+					}
+				}
+			}
+
+			stop = true;
+
+		}
+
+		for (Processo p : Processos) {
+			if (p.getAlocado() == 0) {
+				auxN.setId(p.getId());
+				auxN.setTamanho(p.getComputacao());
+				ProcessosNALOCADOS.add(auxN);
+			}
+			auxN = new ProcessoN();
+		}
+
+		escreverArquivo("NEXT-FIT");
 
 	}
 
