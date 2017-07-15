@@ -2,14 +2,16 @@ package Util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Arquivo {
-	
-	private BufferedWriter escritor = null;	
-	
+
+	private BufferedWriter escritor = null;
+
 	public ArrayList<?> lerArquivo(String FILENAME) {
 
 		BufferedReader br = null;
@@ -60,16 +62,26 @@ public class Arquivo {
 		}
 
 	}
-	
-	public void arquivoSaida(String texto) {
+
+	public void arquivoSaida(String texto, String algoritmo) {
 
 		/**
 		 * Método responsável por escrever os dados no arquivo de saída
 		 */
+		boolean key = false;
 
 		try {
-			
-			escritor.append("\r\n" + texto + "\r\n");
+			if (new File("saida/" + algoritmo + ".txt").exists() == false) {
+
+				new File("saida/" + algoritmo + ".txt").createNewFile();
+
+			}
+			if (!key) {
+				escritor = new BufferedWriter(new FileWriter("saida/" + algoritmo + ".txt"));
+				key = true;
+			}
+
+			escritor.append(texto + "\r\n");
 			escritor.flush();
 
 		} catch (Exception e) {
@@ -77,6 +89,5 @@ public class Arquivo {
 		}
 
 	}
-
 
 }

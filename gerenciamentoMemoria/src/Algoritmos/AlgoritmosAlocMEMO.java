@@ -10,10 +10,11 @@ public class AlgoritmosAlocMEMO {
 
 	private static final String txtMemoria = "entrada/entrada-memoria.txt";
 	private static final String txtProcessos = "entrada/entrada-processos.txt";
+	private static Arquivo a = new Arquivo();
 
 	public static void main(String[] args) {
 
-		Arquivo a = new Arquivo();
+		
 
 		ArrayList<Memoria> Memoria = (ArrayList<Memoria>) a.lerArquivo(txtMemoria);
 		ArrayList<Processo> Processos = (ArrayList<Processo>) a.lerArquivo(txtProcessos);
@@ -24,6 +25,7 @@ public class AlgoritmosAlocMEMO {
 		firstFit(Memoria, Processos);
 		apresentacaoResultado("First Fit", Memoria, Processos);
 		limparSujeira(Memoria, Processos);
+		
 	}
 
 	public static void firstFit(ArrayList<Memoria> Memoria, ArrayList<Processo> Processos) {
@@ -45,8 +47,12 @@ public class AlgoritmosAlocMEMO {
 				}
 			}
 		}
+		
+		a.arquivoSaida("Algoritmo FIRST-FIT","FIRST-FIT");
 
 	}
+	
+	
 
 	public static void apresentacaoResultado(String Algoritmo, ArrayList<Memoria> Memoria,
 			ArrayList<Processo> Processos) {
