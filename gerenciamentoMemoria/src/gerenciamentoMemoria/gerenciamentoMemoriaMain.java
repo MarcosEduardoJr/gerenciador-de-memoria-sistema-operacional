@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class gerenciamentoMemoriaMain {
 
-	private static final String txtMemoria = "entrada/memoria.txt";
-	private static final String txtProcessos = "entrada/processos.txt";
+	private static final String txtMemoria = "entrada/entrada-memoria.txt";
+	private static final String txtProcessos = "entrada/entrada-processos.txt";
 
 	public static void main(String[] args) {
 
@@ -38,11 +38,16 @@ public class gerenciamentoMemoriaMain {
 
 	}
 
-	public static void firstFit(ArrayList<String> strMemoria, ArrayList<String> strProcessos) {
+	public static void firstFit(ArrayList<Memoria> strMemoria, ArrayList<Processo> strProcessos) {
+		Boolean tudoAlocado = true;
 
-		for (String memoria : strMemoria) {
+		for (Processo processo : strProcessos) {
+			for (Memoria memoria : strMemoria) {
+				if (memoria.getEstado().equals("H")) {
+					memoria.setEstado("P");
+					memoria.setIdProcesso(processo.getId());
 
-			for (String processo : strProcessos) {
+				}
 			}
 		}
 
@@ -67,10 +72,10 @@ public class gerenciamentoMemoriaMain {
 				if (!sCurrentLine.equals("\n") && !sCurrentLine.equals("") && !sCurrentLine.equals(" ")) {
 					if (sCurrentLine.contains(" ")) {
 						String[] parts = sCurrentLine.split(" ");
-						Memoria m = new Memoria(parts[0], new Integer(parts[1]), new Integer(parts[2]));
+						Memoria m = new Memoria(parts[0], new Integer(parts[1]), new Integer(parts[2]), 0);
 						mList.add(m);
 					} else {
-						Processo p = new Processo(new Integer(sCurrentLine), 0, 0);
+						Processo p = new Processo(new Integer(sCurrentLine), 0, 0, 0);
 						ptList.add(p);
 					}
 

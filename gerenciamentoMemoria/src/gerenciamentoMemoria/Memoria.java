@@ -1,17 +1,26 @@
 package gerenciamentoMemoria;
 
 public class Memoria {
+	private Integer idProcesso;
 
 	private String estado;
 	private Integer particaoBase;
 	private Integer particaoFinal;
 
-	Memoria(String estado, Integer particaoBase, Integer particaoFinal) {
-
+	Memoria(String estado, Integer particaoBase, Integer particaoFinal, Integer id) {
+		this.idProcesso = id;
 		this.estado = estado;
 		this.particaoBase = particaoBase;
 		this.particaoFinal = particaoFinal;
 
+	}
+
+	public Integer getIdProcesso() {
+		return idProcesso;
+	}
+
+	public void setIdProcesso(Integer id) {
+		this.idProcesso = id;
 	}
 
 	public String getEstado() {

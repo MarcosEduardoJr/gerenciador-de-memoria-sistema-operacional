@@ -1,15 +1,24 @@
 package gerenciamentoMemoria;
 
 public class Processo {
-
+	private Integer id;
 	private Integer computacao;
 	private Integer alocado;
 	private Integer visitado;
 
-	Processo(Integer computacao, Integer alocado, Integer visitado) {
+	Processo(Integer computacao, Integer alocado, Integer visitado, Integer id) {
+		this.id = id;
 		this.computacao = computacao;
 		this.alocado = alocado;
 		this.visitado = visitado;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getComputacao() {
