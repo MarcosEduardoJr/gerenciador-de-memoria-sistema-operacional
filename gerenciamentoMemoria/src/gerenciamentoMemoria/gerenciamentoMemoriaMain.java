@@ -44,9 +44,9 @@ public class gerenciamentoMemoriaMain {
 	public static void apresentacaoResultado(ArrayList<Memoria> Memoria, ArrayList<Processo> Processos) {
 		System.out.println("");
 		System.out.println("");
-		System.out.print("Estado |   Particao base | particao final");
-		System.out.print(" ----- |||| ----");
-		System.out.print("Computacao |   Alocado ");
+		System.out.print("Estado | Particao base | particao final | IDProcesso");
+		System.out.print(" -||- ");
+		System.out.print("ID Processo  |   Alocado ");
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
@@ -55,21 +55,19 @@ public class gerenciamentoMemoriaMain {
 		for (int i = 0;; i++) {
 			if (i < Memoria.size()) {
 				System.out.print(Memoria.get(i).getEstado() + "      |        " + Memoria.get(i).getParticaoBase()
-						+ "        | " + Memoria.get(i).getParticaoFinal() + "                  ");
+						+ "        | " + Memoria.get(i).getParticaoFinal() + "            |      "+ Memoria.get(i).getIdProcesso() +  "                  ");
 
 			} else {
 				acabouMemoria = true;
 			}
-			
-		
-			
+
 			if (i < Processos.size()) {
 				if (Processos.get(i).getAlocado() == 0) {
-					System.out.print("          " + Processos.get(i).getComputacao() + "  |  " + "não alocado" + "| ");
+					System.out.print("  " + Processos.get(i).getId() + "  |  " + "Não" + " ");
 				} else {
-					System.out.print("          " + Processos.get(i).getComputacao() + " |  " + "alocado" + "| ");
+					System.out.print("  " + Processos.get(i).getId() + " |  " + "Sim" + " ");
 				}
-				
+
 			} else {
 				acabouProcesso = true;
 			}
@@ -78,8 +76,8 @@ public class gerenciamentoMemoriaMain {
 				break;
 			}
 			System.out.println("");
-			System.out.print("--------------------------------------");
-			System.out.print("        ");
+			System.out.print("----------------------------------------------------");
+			System.out.print("");
 			System.out.print("          ------------------------");
 			System.out.println("");
 		}
