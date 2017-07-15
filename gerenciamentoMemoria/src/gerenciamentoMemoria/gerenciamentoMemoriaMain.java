@@ -25,14 +25,17 @@ public class gerenciamentoMemoriaMain {
 		Boolean tudoAlocado = true;
 
 		for (Processo processo : Processos) {
-			processo.setVisitado(1);
+
 			for (Memoria memoria : Memoria) {
-				if (memoria.getEstado().equals("H")
-						&& ((memoria.getParticaoBase() - memoria.getParticaoFinal()) <= processo.getComputacao())) {
+				int tamanho = memoria.getParticaoBase() - memoria.getParticaoFinal();
+				tamanho = (tamanho < 0 ? -tamanho : tamanho);
+				System.out.println(tamanho);
+				if ((memoria.getEstado().equals("H")) && (processo.getComputacao() <= tamanho)
+						&& (processo.getVisitado() != 1)) {
 					memoria.setEstado("P");
 					memoria.setIdProcesso(processo.getId());
 					processo.setAlocado(1);
-
+					processo.setVisitado(1);
 				}
 			}
 		}
@@ -46,7 +49,7 @@ public class gerenciamentoMemoriaMain {
 		System.out.println("");
 		System.out.print("Estado | Particao base | particao final | IDProcesso");
 		System.out.print(" -||- ");
-		System.out.print("ID Processo  |   Alocado ");
+		System.out.print("ID Processo  |   Alocado | Tamanho");
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
@@ -55,7 +58,8 @@ public class gerenciamentoMemoriaMain {
 		for (int i = 0;; i++) {
 			if (i < Memoria.size()) {
 				System.out.print(Memoria.get(i).getEstado() + "      |        " + Memoria.get(i).getParticaoBase()
-						+ "        | " + Memoria.get(i).getParticaoFinal() + "            |      "+ Memoria.get(i).getIdProcesso() +  "                  ");
+						+ "        | " + Memoria.get(i).getParticaoFinal() + "            |      "
+						+ Memoria.get(i).getIdProcesso() + "                  ");
 
 			} else {
 				acabouMemoria = true;
@@ -63,9 +67,11 @@ public class gerenciamentoMemoriaMain {
 
 			if (i < Processos.size()) {
 				if (Processos.get(i).getAlocado() == 0) {
-					System.out.print("  " + Processos.get(i).getId() + "  |  " + "Não" + " ");
+					System.out.print("  " + Processos.get(i).getId() + "  |  " + "Não" + " | "
+							+ Processos.get(i).getComputacao());
 				} else {
-					System.out.print("  " + Processos.get(i).getId() + " |  " + "Sim" + " ");
+					System.out.print("  " + Processos.get(i).getId() + " |  " + "Sim" + " | "
+							+ Processos.get(i).getComputacao());
 				}
 
 			} else {
@@ -78,7 +84,7 @@ public class gerenciamentoMemoriaMain {
 			System.out.println("");
 			System.out.print("----------------------------------------------------");
 			System.out.print("");
-			System.out.print("          ------------------------");
+			System.out.print("          ----------------------------");
 			System.out.println("");
 		}
 
@@ -98,7 +104,7 @@ public class gerenciamentoMemoriaMain {
 			String sCurrentLine;
 
 			br = new BufferedReader(new FileReader(FILENAME));
-
+			int idProceso = 1;
 			while ((sCurrentLine = br.readLine()) != null) {
 				if (!sCurrentLine.equals("\n") && !sCurrentLine.equals("") && !sCurrentLine.equals(" ")) {
 					if (sCurrentLine.contains(" ")) {
@@ -106,8 +112,9 @@ public class gerenciamentoMemoriaMain {
 						Memoria m = new Memoria(parts[0], new Integer(parts[1]), new Integer(parts[2]), 0);
 						mList.add(m);
 					} else {
-						Processo p = new Processo(new Integer(sCurrentLine), 0, 0, 0);
+						Processo p = new Processo(new Integer(sCurrentLine), 0, 0, idProceso);
 						ptList.add(p);
+						idProceso++;
 					}
 
 				}
