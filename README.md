@@ -18,22 +18,31 @@ Tamanho: tamanho da partição
 O final do arquivo representa o final da lista encadeada e, consequentemente, o final da memória.
 
 Exemplo:
-P 0 10
-P 10 15
-H 25 30
-P 55 15
-H 70 5
-H 75 8
+- P 0 10
+
+- P 10 15
+
+- H 25 30
+
+- P 55 15
+
+- H 70 5
+
+- H 75 8
 
 ENTRADA 2: ARQUIVO DE PROCESSOS
 Arquivo de texto onde cada linha representa um processo e seu tamanho para alocação
 
 Exemplo:
-12
-5
-10
-8
-20
+- 12
+
+-5
+
+-10
+
+-8
+
+-20
 
 # SAÍDA
 
@@ -43,11 +52,17 @@ Caso um ou mais processos não seja alocado por falta de espaço, apresentá-los
 
 Exemplo:
 Arquivo FIRST-FIT
-P 0 10
-P 10 15
-P 25 12
-P 55 15
-P 70 5
-P 75 8
+- P 0 10
+
+- P 10 15
+
+- P 25 12
+
+- P 55 15
+
+- P 70 5
+
+- P 75 8
+
 PROCESSOS NÃO ALOCADOS (TAMANHOS): 10, 20
 
