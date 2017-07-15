@@ -18,7 +18,8 @@ public class gerenciamentoMemoriaMain {
 		apresentacao(Memoria, Processos);
 
 		firstFit(Memoria, Processos);
-
+		apresentacaoResultado("First Fit", Memoria, Processos);
+		limparSujeira(Memoria, Processos);
 	}
 
 	public static void firstFit(ArrayList<Memoria> Memoria, ArrayList<Processo> Processos) {
@@ -28,8 +29,9 @@ public class gerenciamentoMemoriaMain {
 
 			for (Memoria memoria : Memoria) {
 				int tamanho = memoria.getParticaoBase() - memoria.getParticaoFinal();
-				tamanho = (tamanho < 0 ? -tamanho : tamanho);
-				//System.out.println(tamanho);
+				tamanho = (tamanho < 0 ? -tamanho : tamanho); // tamanho
+																// positivo
+				// System.out.println(tamanho);
 				if ((memoria.getEstado().equals("H")) && (processo.getComputacao() <= tamanho)
 						&& (processo.getVisitado() != 1)) {
 					memoria.setEstado("P");
@@ -39,8 +41,6 @@ public class gerenciamentoMemoriaMain {
 				}
 			}
 		}
-
-		apresentacaoResultado("First Fit", Memoria, Processos);
 
 	}
 
@@ -88,6 +88,19 @@ public class gerenciamentoMemoriaMain {
 			System.out.print("");
 			System.out.print("          ----------------------------");
 			System.out.println("");
+		}
+
+	}
+
+	public static void limparSujeira(ArrayList<Memoria> Memoria, ArrayList<Processo> Processos) {
+
+		for (Memoria m : Memoria) {
+			m.setEstado("H");
+			m.setIdProcesso(0);
+		}
+		for (Processo p : Processos) {
+			p.setAlocado(0);
+
 		}
 
 	}
