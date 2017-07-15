@@ -12,6 +12,10 @@ public class Processo {
 		this.alocado = alocado;
 		this.visitado = visitado;
 	}
+	
+	public Processo(){
+		
+	}
 
 	public Integer getId() {
 		return id;
@@ -44,5 +48,13 @@ public class Processo {
 	public void setVisitado(Integer visitado) {
 		this.visitado = visitado;
 	}
+
+	@Override
+	public String toString() {
+		return "Processo [id=" + id + ", computacao=" + computacao + ", alocado=" + alocado + ", visitado=" + visitado
+				+ "]";
+	}
+	
+	
 
 }
