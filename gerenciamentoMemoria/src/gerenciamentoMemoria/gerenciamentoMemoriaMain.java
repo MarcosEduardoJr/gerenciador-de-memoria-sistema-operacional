@@ -16,7 +16,7 @@ public class gerenciamentoMemoriaMain {
 		ArrayList<Processo> Processos = (ArrayList<Processo>) lerArquivo(txtProcessos);
 
 		apresentacao(Memoria, Processos);
-
+		// --- daqui pra frente eh so meter bala
 		firstFit(Memoria, Processos);
 		apresentacaoResultado("First Fit", Memoria, Processos);
 		limparSujeira(Memoria, Processos);
