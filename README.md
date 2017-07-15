@@ -36,13 +36,13 @@ Arquivo de texto onde cada linha representa um processo e seu tamanho para aloca
 Exemplo:
 - 12
 
--5
+- 5
 
--10
+- 10
 
--8
+- 8
 
--20
+- 20
 
 # SAÍDA
 
